@@ -4,12 +4,14 @@ var data = undefined;
 // define margin
 var margin = {top: 20, right: 20, bottom: 30, left: 40};
 
+//Create a legend
 function legend(element, keys, z) {
     var legendRectSize = 15;
     var svg = d3.select('#'+element).append('svg')
         .attr('width', 400)
         .attr('height', 30);
 
+    //Create the legend
     var legend = svg.selectAll('.legend')
         .data(keys)
         .enter()
@@ -21,6 +23,7 @@ function legend(element, keys, z) {
             return 'translate(' + horz + ',' + vert + ')';
         });
 
+    //Draw the square of the legend
     legend.append('rect')
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
@@ -31,6 +34,7 @@ function legend(element, keys, z) {
             return z(d)
         });
 
+    //Add the text to the legend
     legend.append('text')
         .attr('x', legendRectSize + 5)
         .attr('y', 15)
@@ -79,7 +83,9 @@ function treemap(element) {
         return d.key;
     });
 
+    //Define the domain of colors
     color.domain(keys);
+    //Create a Legend for this treemap
     legend("legend_" + element, keys, color);
 
     var treemap = d3.treemap()
@@ -99,6 +105,7 @@ function treemap(element) {
 
     treemap(root);
 
+    //Draw the group nodes
     var nodes = g.selectAll(".tm")
         .data(root.leaves())
         .enter().append("g")
@@ -107,6 +114,7 @@ function treemap(element) {
         })
         .attr("class", "tm");
 
+    //Draw rectangles
     nodes.append("rect")
         .attr("width", function (d) {
             return d.x1 - d.x0;
@@ -118,6 +126,7 @@ function treemap(element) {
             return color(d.parent.data.key);
         });
 
+    //Add the text to areas
     nodes.append("text")
         .attr("class", "tm_text")
         .attr('dx', 4)
@@ -163,6 +172,7 @@ function bar_chart(element, property) {
     console.log("BARCHART DATA");
     console.log(nested_data);
 
+    //Create var x !It's different if property is is time or not!
     if (property === "time") {
         var x = d3.scaleLinear()
             .rangeRound([0, width]);
@@ -180,7 +190,7 @@ function bar_chart(element, property) {
     //Create var z
     var z = d3.scaleOrdinal(d3.schemeCategory10);
 
-    //Define the domain of x axe
+    //Define the domain of x axe !It's different if property is is time or not!
     if (property === "time") {
         x.domain([0, d3.max(nested_data.map(function (d) {
             return +d.key;
@@ -255,7 +265,7 @@ $(function () {
             d.time = +d.time;
         });
         //Get all times from time column and make sum
-        var all_times = d3.sum(data, function(d){return (d.time);})
+        var all_times = d3.sum(data, function(d){return (d.time);});
         console.log("TOTAL TIMES");
         console.log(all_times);
 
