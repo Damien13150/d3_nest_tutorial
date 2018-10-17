@@ -13,7 +13,7 @@ Le projet est à rendre pour le *vendredi 26 octobre 9h30*.
 
  - [1 - Lucile] commenter (de préférence en anglais) chaque ligne du fichier main.js
  - [2 - Maxime] Afficher un histogramme des priorités (Ajouter une colonne sur la première ligne, ensuite c'est 1 ligne de javascript...)
- - [3 - FAIT - Damien] Afficher un histogramme du temps des taches. Pour cela modifier la fonction `bar_chart` car l'échelle en X devra etre linéaire !
+ - [3 - Damien] Afficher un histogramme du temps des taches. Pour cela modifier la fonction `bar_chart` car l'échelle en X devra etre linéaire !
  - [4 - Roman] Afficher quelque-part dans la page des statistiques globales:
    - Temps total de toutes les taches
    - Temps total des taches de Joe
