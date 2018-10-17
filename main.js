@@ -5,7 +5,7 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40};
 // function legend initiates
 function legend(element, keys, z) {
     var legendRectSize = 15;
-    var svg = d3.select('#' + element).append('svg')
+    var svg = d3.select('#'+element).append('svg')
         .attr('width', 400)
         .attr('height', 30);
 
@@ -149,23 +149,16 @@ function bar_chart(element, property) {
     console.log("BARCHART DATA");
     console.log(nested_data);
 
-    if (property === "time") {
-        var x = d3.scaleLinear()
-            .rangeRound([0, width]);
-    }
-    else {
-        x = d3.scaleBand()
-            .rangeRound([0, width])
-            .paddingInner(0.1);
-    }
-
+    var x = d3.scaleBand()
+        .rangeRound([0, width])
+        .paddingInner(0.1);
 
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
     var z = d3.scaleOrdinal(d3.schemeCategory10);
 
-    if (property === "time"){
+    if (property === "time") {
         x.domain([0, d3.max(nested_data.map(function (d) {
             return +d.key;
         })) + 1]);
@@ -173,8 +166,8 @@ function bar_chart(element, property) {
         x.domain(nested_data.map(function (d) {
             return d.key;
         }));
-    }
 
+    }
 
     y.domain([0, d3.max(nested_data, function (d) {
         return d.value.size;
@@ -198,11 +191,7 @@ function bar_chart(element, property) {
             return height - y(d.value.size);
         })
         .attr("width", function (d) {
-            if (property === "time") {
-                return (x(1)-x(0))*0.9;
-            } else {
-                return x.bandwidth();
-            }
+            return x.bandwidth();
         })
         .style("fill", function (d) {
             return z(d.key)
@@ -232,8 +221,9 @@ $(function () {
         });
         bar_chart("bcs", "status");
         bar_chart("bcw", "who");
-        bar_chart("bct", "time");
+        bar_chart("bcp", "priority");
         treemap("status");
+        treemap("who");
 
     });
 

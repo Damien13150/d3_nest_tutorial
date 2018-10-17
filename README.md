@@ -1,4 +1,4 @@
-# Déroulement
+ # Déroulement
 
 Vous devez créer un fork de ce projet par groupe BI.
 Tous les membres du groupe doivent rejoindre le projet.
