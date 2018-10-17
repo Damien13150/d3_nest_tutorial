@@ -243,7 +243,7 @@ $(function () {
 
 
         //Display stats to the div's id "stats"
-        document.getElementById('stats').innerHTML = all_times;
+        document.getElementById('stats').innerHTML = all_times +" minutes";
 
 
 
