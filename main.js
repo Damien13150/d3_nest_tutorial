@@ -1,10 +1,12 @@
+//define var data
 var data = undefined;
 
+// define margin
 var margin = {top: 20, right: 20, bottom: 30, left: 40};
 
 function legend(element, keys, z) {
     var legendRectSize = 15;
-    var svg = d3.select('#' + element).append('svg')
+    var svg = d3.select('#'+element).append('svg')
         .attr('width', 400)
         .attr('height', 30);
 
@@ -37,21 +39,27 @@ function legend(element, keys, z) {
         });
 }
 
+//create a treemap
 function treemap(element) {
 
+    //clean html in id treemap and id legend
     $("#treemap_" + element).html("");
     $("#legend_" + element).html("");
+    //create a group for svg with margin
     var svg = d3.select("#treemap_" + element).append("svg").attr("width", 600).attr("height", 300);
     var width = +svg.attr("width") - margin.left - margin.right;
     var height = +svg.attr("height") - margin.top - margin.bottom;
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
     if (data === undefined) {
         return;
     }
 
+    //define var color
     var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+    //Create an array with data we need for tree map
     var nested_data = d3.nest()
         .key(function (d) {
             return d.status;
@@ -120,17 +128,23 @@ function treemap(element) {
 
 }
 
+//Crate a barchart
 function bar_chart(element, property) {
+    //Clean html in id element
     $("#" + element).html("");
+    //create a group for svg with margin
     var svg = d3.select("#" + element).append("svg").attr("width", 300).attr("height", 300);
     var width = +svg.attr("width") - margin.left - margin.right;
     var height = +svg.attr("height") - margin.top - margin.bottom;
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    //Create an array with the only three data we need
     var nested_data = d3.nest()
+        //Regroup data by property
         .key(function (d) {
             return d[property];
         })
+        //Calculate number of property and the time it takes
         .rollup(function (d) {
             return {
                 size: d.length, total_time: d3.sum(d, function (d) {
@@ -140,6 +154,7 @@ function bar_chart(element, property) {
         })
         .entries(data);
 
+    //Sort nested data by alphabetical order
     nested_data = nested_data.sort(function (a, b) {
         return d3.ascending(a.key, b.key)
     });
@@ -148,23 +163,20 @@ function bar_chart(element, property) {
     console.log("BARCHART DATA");
     console.log(nested_data);
 
-    if (property === "time") {
-        var x = d3.scaleLinear()
-            .rangeRound([0, width]);
-    }
-    else {
-        x = d3.scaleBand()
-            .rangeRound([0, width])
-            .paddingInner(0.1);
-    }
+    //Create var x
+    var x = d3.scaleBand()
+        .rangeRound([0, width])
+        .paddingInner(0.1);
 
-
+    //Create var y
     var y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
+    //Create var z
     var z = d3.scaleOrdinal(d3.schemeCategory10);
 
-    if (property === "time"){
+    //Define the domain of x axe
+    if (property === "time") {
         x.domain([0, d3.max(nested_data.map(function (d) {
             return +d.key;
         })) + 1]);
@@ -172,16 +184,20 @@ function bar_chart(element, property) {
         x.domain(nested_data.map(function (d) {
             return d.key;
         }));
+
     }
 
-
+    //Define the domain of y axe
     y.domain([0, d3.max(nested_data, function (d) {
         return d.value.size;
     })]);
+
+    //Define the domain of colors
     z.domain(nested_data.map(function (d) {
         return d.key;
     }));
 
+    //draw the barchart
     g.selectAll(".bar")
         .data(nested_data)
         .enter()
@@ -197,41 +213,44 @@ function bar_chart(element, property) {
             return height - y(d.value.size);
         })
         .attr("width", function (d) {
-            if (property === "time") {
-                return (x(1)-x(0))*0.9;
-            } else {
-                return x.bandwidth();
-            }
+            return x.bandwidth();
         })
         .style("fill", function (d) {
             return z(d.key)
         });
 
+    //create a group for x axe
     g.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
 
+    //crate a group for y axe
     g.append("g")
         .attr("class", "axis")
         .call(d3.axisLeft(y).ticks(null, "s"))
 }
 
+//When DOM is ready do this
 $(function () {
     console.log("READY");
 
+    //Load the googlesheet data
     var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfeT9lPtJ5ia2XsopWVdvl98Oy7Bu6xL9SVQBEh32OXC8Qk4MKYxr2TcGSSTkAs7kAMfjF83IEGhQ-";
     URL += "/pub?single=true&output=csv";
 
 
+    //Create csv with googlesheet data
     d3.csv(URL, function (d) {
         data = d;
         data.forEach(function (d) {
             d.time = +d.time;
         });
+        //Crate a barchart in id bcs by status
         bar_chart("bcs", "status");
+        //Crate a barchart in id bcw by person
         bar_chart("bcw", "who");
-        bar_chart("bct", "time");
+        //crate a treemap by status
         treemap("status");
 
     });
