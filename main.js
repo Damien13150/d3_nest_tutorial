@@ -239,7 +239,7 @@ $(function () {
         bar_chart("bct", "time");
         bar_chart("bcp", "priority");
         treemap("status");
-        treemap("who");
+
 
 
         //Display stats to the div's id "stats"
