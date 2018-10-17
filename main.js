@@ -220,7 +220,7 @@ $(function () {
         });
         bar_chart("bcs", "status");
         bar_chart("bcw", "who");
-        bar_chart("bcp", "who");
+        bar_chart("bcp", "priority");
         treemap("status");
 
     });
