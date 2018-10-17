@@ -10,9 +10,10 @@ Chaque tache doit faire l'objet d'un commit référençant le numéro de la tach
 Le projet est à rendre pour le *vendredi 26 octobre 9h30*.
 
 ## Taches à faire impérativement
+
  - [1 - Lucile] commenter (de préférence en anglais) chaque ligne du fichier main.js
  - [2 - Maxime] Afficher un histogramme des priorités (Ajouter une colonne sur la première ligne, ensuite c'est 1 ligne de javascript...)
- - [3 - Damien] Afficher un histogramme du temps des taches. Pour cela modifier la fonction `bar_chart` car l'échelle en X devra etre linéaire !
+ - [3 - FAIT - Damien] Afficher un histogramme du temps des taches. Pour cela modifier la fonction `bar_chart` car l'échelle en X devra etre linéaire !
  - [4 - Roman] Afficher quelque-part dans la page des statistiques globales:
    - Temps total de toutes les taches
    - Temps total des taches de Joe
@@ -24,6 +25,7 @@ Le projet est à rendre pour le *vendredi 26 octobre 9h30*.
  - [9 - Damien] Changer avec du CSS le style des axes des graphiques
  - [10 - Guillaume] Ajouter un (joli) footer
  - [11 - Maxime] Ajouter des transitions animées
+
 
 ## Taches avancées
  - [A - Damien/Lucile] Implémenter le bouton "Only Joe" (recharge les graphiques avec les taches de Joe uniquement)
