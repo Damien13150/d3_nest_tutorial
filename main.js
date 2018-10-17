@@ -2,7 +2,6 @@ var data = undefined;
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40};
 
-// function legend initiates
 function legend(element, keys, z) {
     var legendRectSize = 15;
     var svg = d3.select('#'+element).append('svg')
@@ -230,12 +229,23 @@ $(function () {
         data.forEach(function (d) {
             d.time = +d.time;
         });
+        //Get all times from time column and make sum
+        var all_times = d3.sum(data, function(d){return (d.time);})
+        console.log("TOTAL TIMES");
+        console.log(all_times);
+
         bar_chart("bcs", "status");
         bar_chart("bcw", "who");
         bar_chart("bct", "time");
         bar_chart("bcp", "priority");
         treemap("status");
         treemap("who");
+
+
+        //Display stats to the div's id "stats"
+        document.getElementById('stats').innerHTML = all_times;
+
+
 
     });
 
