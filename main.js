@@ -163,10 +163,15 @@ function bar_chart(element, property) {
     console.log("BARCHART DATA");
     console.log(nested_data);
 
-    //Create var x
-    var x = d3.scaleBand()
-        .rangeRound([0, width])
-        .paddingInner(0.1);
+    if (property === "time") {
+        var x = d3.scaleLinear()
+            .rangeRound([0, width]);
+    }
+    else {
+        x = d3.scaleBand()
+            .rangeRound([0, width])
+            .paddingInner(0.1);
+    }
 
     //Create var y
     var y = d3.scaleLinear()
@@ -184,7 +189,6 @@ function bar_chart(element, property) {
         x.domain(nested_data.map(function (d) {
             return d.key;
         }));
-
     }
 
     //Define the domain of y axe
@@ -213,7 +217,11 @@ function bar_chart(element, property) {
             return height - y(d.value.size);
         })
         .attr("width", function (d) {
-            return x.bandwidth();
+            if (property === "time") {
+                return (x(1)-x(0))*0.9;
+            } else {
+                return x.bandwidth();
+            }
         })
         .style("fill", function (d) {
             return z(d.key)
@@ -246,12 +254,24 @@ $(function () {
         data.forEach(function (d) {
             d.time = +d.time;
         });
-        //Crate a barchart in id bcs by status
+        //Get all times from time column and make sum
+        var all_times = d3.sum(data, function(d){return (d.time);})
+        console.log("TOTAL TIMES");
+        console.log(all_times);
+
         bar_chart("bcs", "status");
         //Crate a barchart in id bcw by person
         bar_chart("bcw", "who");
-        //crate a treemap by status
+        bar_chart("bct", "time");
+        bar_chart("bcp", "priority");
         treemap("status");
+
+
+
+        //Display stats to the div's id "stats"
+        document.getElementById('stats').innerHTML = all_times +" minutes";
+
+
 
     });
 
