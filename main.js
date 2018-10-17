@@ -198,7 +198,7 @@ function bar_chart(element, property) {
         })
         .attr("width", function (d) {
             if (property === "time") {
-                return 10;
+                return (x(1)-x(0))*0.9;
             } else {
                 return x.bandwidth();
             }
