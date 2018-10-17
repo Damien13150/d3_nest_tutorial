@@ -223,7 +223,7 @@ $(function () {
         bar_chart("bcw", "who");
         bar_chart("bcp", "priority");
         treemap("status");
-        treemap("who");
+
 
     });
 
