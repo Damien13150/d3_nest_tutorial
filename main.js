@@ -147,6 +147,8 @@ function bar_chart(element, property) {
     var height = +svg.attr("height") - margin.top - margin.bottom;
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var colors = ["#956633", "#58A4B0", "#0C7C59", "#2B3C3A", "#D64933"]
+
     //Create an array with the only three data we need
     var nested_data = d3.nest()
         //Regroup data by property
@@ -188,7 +190,7 @@ function bar_chart(element, property) {
         .rangeRound([height, 0]);
 
     //Create var z
-    var z = d3.scaleOrdinal(d3.schemeCategory10);
+    var z = d3.scaleOrdinal(colors);
 
     //Define the domain of x axe !It's different if property is is time or not!
     if (property === "time") {
@@ -265,9 +267,14 @@ $(function () {
             d.time = +d.time;
         });
         //Get all times from time column and make sum
-        var all_times = d3.sum(data, function(d){return (d.time);});
+        var all_times = d3.sum(data, function (d) {
+            return (d.time);
+        })
         console.log("TOTAL TIMES");
         console.log(all_times);
+
+        //Get sum Joe's work time
+
 
         bar_chart("bcs", "status");
         //Crate a barchart in id bcw by person
@@ -277,12 +284,7 @@ $(function () {
         treemap("status");
 
 
-
         //Display stats to the div's id "stats"
-        document.getElementById('stats').innerHTML = all_times +" minutes";
-
-
-
+        document.getElementById('total_time').innerHTML = "TOTAL TIME : " + all_times;
     });
-
 });
