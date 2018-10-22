@@ -18,7 +18,7 @@ function legend(element, keys, z) {
         .append('g')
         .attr('class', 'legend')
         .attr('transform', function (d, i) {
-            var horz = 0 + i * 110 + 10;
+            var horz = i * 110 + 10;
             var vert = 0;
             return 'translate(' + horz + ',' + vert + ')';
         });
@@ -147,7 +147,7 @@ function bar_chart(element, property) {
     var height = +svg.attr("height") - margin.top - margin.bottom;
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var colors = ["#956633", "#58A4B0", "#0C7C59", "#2B3C3A", "#D64933"]
+    var colors = ["#956633", "#58A4B0", "#0C7C59", "#2B3C3A", "#D64933"];
 
     //Create an array with the only three data we need
     var nested_data = d3.nest()

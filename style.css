@@ -93,3 +93,8 @@ main {
         line-height: 1.8;
     }
 }
+
+g.axis{
+    font-family: 'Montserrat', sans-serif;
+    color : red !important;
+}
