@@ -44,7 +44,7 @@ function legend(element, keys, z) {
 }
 
 //create a treemap
-function treemap(element) {
+function treemap(element, property1, property2) {
 
     //clean html in id treemap and id legend
     $("#treemap_" + element).html("");
@@ -66,10 +66,10 @@ function treemap(element) {
     //Create an array with data we need for tree map
     var nested_data = d3.nest()
         .key(function (d) {
-            return d.status;
+            return d[property1];
         })
         .key(function (d) {
-            return d.who;
+            return d[property2];
         })
         .rollup(function (d) {
             return d.length;
@@ -276,12 +276,15 @@ $(function () {
         //Get sum Joe's work time
 
 
+        //create a barchart in id bcs
         bar_chart("bcs", "status");
         //Crate a barchart in id bcw by person
         bar_chart("bcw", "who");
         bar_chart("bct", "time");
         bar_chart("bcp", "priority");
-        treemap("status");
+        //Create a treemap in id treemap_status + legend in legend_status
+        treemap("status", "status", "who");
+        treemap("who", "who", "priority");
 
 
         //Display stats to the div's id "stats"
