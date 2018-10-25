@@ -50,7 +50,7 @@ function treemap(element, property1, property2) {
     $("#treemap_" + element).html("");
     $("#legend_" + element).html("");
     //create a group for svg with margin
-    var svg = d3.select("#treemap_" + element).append("svg").attr("width", 600).attr("height", 300);
+    var svg = d3.select("#treemap_" + element).append("svg").attr("width", 1200).attr("height", 600);
     var width = +svg.attr("width") - margin.left - margin.right;
     var height = +svg.attr("height") - margin.top - margin.bottom;
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -142,7 +142,7 @@ function bar_chart(element, property) {
     //Clean html in id element
     $("#" + element).html("");
     //create a group for svg with margin
-    var svg = d3.select("#" + element).append("svg").attr("width", 300).attr("height", 300);
+    var svg = d3.select("#" + element).append("svg").attr("width", 500).attr("height", 500);
     var width = +svg.attr("width") - margin.left - margin.right;
     var height = +svg.attr("height") - margin.top - margin.bottom;
     var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");

@@ -13,9 +13,9 @@ main {
     fill: white;
 }
 
-
-
-
+.barchart, .treemap {
+    padding-top: 50px;
+}
 
 /* FOOTER CSS */
 
