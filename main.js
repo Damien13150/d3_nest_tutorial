@@ -274,15 +274,19 @@ $(function () {
     //Create csv with googlesheet data
     d3.csv(URL, function (d) {
         data = d;
+        tot_times_all = 0;
+        tot_times_joe = 0;
+        tot_times_doing = 0;
         data.forEach(function (d) {
             d.time = +d.time;
+            tot_times_all += d.time;
+            if (d.who == "Joe"){
+                tot_times_joe += d.time;
+            }
+            if (d.status == "DOING"){
+                tot_times_doing += d.time;
+            }
         });
-        //Get all times from time column and make sum
-        var all_times = d3.sum(data, function (d) {
-            return (d.time);
-        })
-        console.log("TOTAL TIMES");
-        console.log(all_times);
 
         //Get sum Joe's work time
 
@@ -298,7 +302,18 @@ $(function () {
         treemap("who", "who", "priority");
 
 
+        console.log("TOTAL TIMES");
+        console.log(tot_times_all);
+
+        console.log("TOTAL TIMES JOE");
+        console.log(tot_times_joe);
+
+        console.log("TOTAL TIMES DOING");
+        console.log(tot_times_doing);
+
         //Display stats to the div's id "stats"
-        document.getElementById('total_time').innerHTML = "TOTAL TIME : " + all_times;
+        document.getElementById('total_time').innerHTML = "TOTAL TIME ALL TASK : " + tot_times_all;
+        document.getElementById('total_joe').innerHTML = "TOTAL TIME TASK JOE : " + tot_times_joe;
+        document.getElementById('total_doing').innerHTML = "TOTAL TIME TASK DOING : " + tot_times_doing;
     });
 });
